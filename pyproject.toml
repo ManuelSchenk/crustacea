@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "crispy-crustacea"
+version = "0.1.0"
+description = ""
+authors = ["Manuel Schenk <manuel.schenk@bosch.de>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+textual = "^1.0.0"
+icecream = "^2.1.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
