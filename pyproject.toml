@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.13"
 textual = "^1.0.0"
 icecream = "^2.1.4"
+textual-dev = "^1.7.0"
 
 
 [build-system]
