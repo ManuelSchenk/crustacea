@@ -5,7 +5,8 @@
             "name": "Debug textual App",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            // "program": "${file}",
+            "program": "./crustacea/main.py",
             "console": "integratedTerminal",
             "env": {
                 "PYTHONPATH": "${workspaceFolder}",
