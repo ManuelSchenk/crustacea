@@ -15,14 +15,11 @@ with open("./tutorials/stopwatch.py", "r") as text:
 
 class CrustaceaApp(app.App):
     
-    error_counter = Reactive(0)
-    
-    statistics = CrustaceaStatistics()
-    
     def compose(self) -> app.ComposeResult:  
         try:
             yield widg.Header(show_clock=True)
             yield widg.Footer()
+            self.statistics = CrustaceaStatistics()
             
             # To enable syntax highlighting, you'll need to install the `syntax` extra dependencies:
             # pip install "textual[syntax]"
