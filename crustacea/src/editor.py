@@ -1,10 +1,15 @@
 
 from textual import events
 import textual.widgets as widg 
-# from crustacea.utils.logging import ic 
+from crustacea.utils.logging import ic 
 
 
 class CrustaceaTextArea(widg.TextArea):
+    
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self.auto_tab = True
+        
    
     async def _on_key(self, event: events.Key) -> None:
         """Handle key presses which correspond to document inserts."""
@@ -46,7 +51,9 @@ class CrustaceaTextArea(widg.TextArea):
                 self.move_cursor_relative(0, len(insert))
                 self.count_char_up()
             elif insert == "\n" and current_col == len(self.document[current_row]):
-                self.move_cursor((1 + (self.next_row_with_content(current_row)), 0))
+                next_row = 1 + (self.next_row_with_content(current_row))
+                first_char = self.first_char_in_row(next_row)
+                self.move_cursor((next_row, first_char))
                 self.count_char_up()
             else:
                 self.count_error_up()
@@ -57,6 +64,18 @@ class CrustaceaTextArea(widg.TextArea):
         if len(set(self.document[current_row + 1])) <= 1: 
             current_row = self.next_row_with_content(current_row + 1)
         return current_row
+    
+    def first_char_in_row(self, row):
+        """
+        Return the index of the first non-space, non-tab character in the given line.
+        """
+        if not self.auto_tab:
+            return 0
+        line = self.document[row]
+        # Calculate the number of leading spaces and tabs
+        index = len(line) - len(line.lstrip(" \t"))
+        ic(index)
+        return index
     
     def assign_error_counter(self, count_up_func):
         self.count_up = count_up_func

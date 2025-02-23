@@ -29,25 +29,28 @@ class CrustaceaStatistics(widg.Static):
     
     def updated_statistics(self):
         # timer
-        time = self.time_elapsed
-        time, seconds = divmod(time, 60)
-        hours, minutes = divmod(time, 60)
-        time_str = f"Elapsed Time: {hours:02.0f}:{minutes:02.0f}:{seconds:02.1f}"
-        char_per_minute = f"Char/min: {round(self.char_counter / (self.time_elapsed / 60), 1)}"
+        # time = self.time_elapsed
+        # time, seconds = divmod(time, 60)
+        # hours, minutes = divmod(time, 60)
+        # time_str = f"Elapsed Time: {hours:02.0f}:{minutes:02.0f}:{seconds:02.1f}"
+        
+        char_per_minute = round(self.char_counter / (self.time_elapsed / 60), 1)
+        char_min = f"Char/min: {char_per_minute}"
         # counter
         char_ctr = f"Char Counter: {self.char_counter}"
         err_ctr = f"Error Counter: {self.error_counter}"
         err_rate = f"Error Rate (err/100): {round((self.error_counter / (1 + self.char_counter)) * 100, 2)}" 
-        total_length = len(char_ctr) + len(err_ctr) + len(err_rate) + len(time_str) + len(char_per_minute)
+        points = f"Points: {int(self.char_counter * char_per_minute / (1 + self.error_counter))}"
+        total_length = len(char_ctr) + len(err_ctr) + len(err_rate) + len(char_min) + len(points)
         spacing = (os.get_terminal_size().columns - total_length) // 5
-        return f"{char_ctr}{' ' * spacing}{err_ctr}{' ' * spacing}{err_rate}{' ' * spacing}{time_str}{' ' * spacing}{char_per_minute}"
+        return f"{char_ctr}{' ' * spacing}{err_ctr}{' ' * spacing}{err_rate}{' ' * spacing}{char_min}{' ' * spacing}{points}"
     
     def update_time_elapsed(self): 
         self.time_elapsed = monotonic() - self.start_time
     
     def _on_mount(self):
         self.update_timer = self.set_interval(  # calls the method given in an interval
-            1 / 10,
+            1,
             self.update_time_elapsed, 
             pause=False   
         )
