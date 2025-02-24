@@ -4,7 +4,7 @@ import crustacea.src.editor as edit
 from crustacea.src.statistics import CrustaceaStatistics
 from crustacea.src.header import CrustaceaHeader
 from textual.reactive import Reactive
-
+from time import monotonic 
 
 from crustacea.utils.logging import ic 
 
@@ -18,10 +18,19 @@ with open("./tutorials/stopwatch.py", "r") as text:
 class CrustaceaApp(app.App):
     
     BINDINGS = [
+        ("ctrl+s", "pause_timer", "Pause Timer"),
+        ("ctrl+b", "forced_backspace_error", "Disable Backspace Error correction"),
         ("ctrl+t", "toggle_auto_tab", "Toggle Automatic Tab"),
+        ("ctrl+n", "toggle_cursor_navigation", "Enable Cursor Navigation"),
     ]
-    
+
+    start_time = monotonic()
     time_elapsed = Reactive(0.00001)
+    pause = False
+    time_paused = Reactive(0.00001)
+    enable_arrow_keys = False
+    forced_backspace_error = True
+
     
     def compose(self) -> app.ComposeResult:  
         try:
@@ -30,30 +39,49 @@ class CrustaceaApp(app.App):
             yield widg.Footer()
             self.statistics = CrustaceaStatistics()
             
-            # To enable syntax highlighting, you'll need to install the `syntax` extra dependencies:
-            # pip install "textual[syntax]"
             self.editor = edit.CrustaceaTextArea.code_editor(input_text, language="python", theme="vscode_dark")
             self.editor.read_only = True
-            
-            # connect statistics with the editor
-            self.editor.count_error_up = self.statistics.count_error_up
-            self.editor.count_char_up = self.statistics.count_char_up
-            
+  
             yield self.editor
             yield self.statistics
             
         except Exception as e:
             ic(e)
+            
+    
+    def update_time_elapsed(self): 
+        if self.pause:
+            self.start_time = monotonic() - self.time_elapsed
+        else: 
+            self.time_elapsed = monotonic() - self.start_time
+            self.editor.focus()
+    
+    def on_mount(self):
+        self.update_timer = self.set_interval(  # calls the method given in an interval
+            interval=1/2,
+            callback=self.update_time_elapsed, 
+            pause=False  
+        )
     
     def action_toggle_auto_tab(self):
-        '''
-        toggles the automatic usage of tabs at line start after pressing return at line end 
-        '''
+        '''toggles the usage of tabs at line start after return at line end'''
         self.editor.auto_tab = not self.editor.auto_tab
+                    
+    def action_pause_timer(self):
+        '''paused the elapse timer'''
+        self.pause = not self.pause
+        self.editor.disabled = not self.editor.disabled
         
+    def action_toggle_cursor_navigation(self):
+        '''enable the navigation with arrow keys in the code editor'''
+        self.enable_arrow_keys = not self.enable_arrow_keys        
+        
+    def action_forced_backspace_error(self):
+        '''enable the navigation with arrow keys in the code editor'''
+        self.forced_backspace_error = not self.forced_backspace_error 
             
 
 if __name__ == "__main__":
     ic("CrustaceaApp started...")
-    CrustaceaApp().run()
+    CrustaceaApp().run(mouse=False)
         
