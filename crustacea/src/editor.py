@@ -30,11 +30,9 @@ class CrustaceaTextArea(widg.TextArea):
             event.stop()
             event.prevent_default()
             insert = insert_values.get(event.key, event.character)
-            # `insert` is not None because event.character cannot be
-            # None because we've checked that it's printable.
             assert insert is not None
 
-            # The following is the crustacea logic:
+            # The following is the custom crustacea logic:
             current_row, current_col = self.cursor_location
             next_char_position =  (
                     (current_row, current_col), 
@@ -47,14 +45,14 @@ class CrustaceaTextArea(widg.TextArea):
                         insert
                     )
                 self.move_cursor_relative(0, len(insert))
-                self.count_char_up()
+                self.app.statistics.count_char_up()
             elif insert == "\n" and current_col == len(self.document[current_row]):
                 next_row = 1 + (self.next_row_with_content(current_row))
                 first_char = self.first_char_in_row(next_row)
                 self.move_cursor((next_row, first_char))
-                self.count_char_up()
+                self.app.statistics.count_char_up()
             else:
-                self.count_error_up()
+                self.app.statistics.count_error_up()
                 # ic(f"The wrong key was pressed: {event.key}")
     
     def next_row_with_content(self, current_row: int) -> int: 
@@ -74,8 +72,35 @@ class CrustaceaTextArea(widg.TextArea):
         index = len(line) - len(line.lstrip(" \t"))
         ic(index)
         return index
-        
+    
+    
+    
+    # overwritten textual text area functions ########################
+    
     def scroll_cursor_visible(self, center: bool = True, animate: bool = True):
         """This activates the center and animate of the original textual scroll function"""
         super().scroll_cursor_visible(center, animate)
 
+    def action_cursor_down(self, select: bool = False) -> None:
+        if self.app.enable_arrow_keys:
+            super().action_cursor_down(select)
+            
+    def action_cursor_up(self, select: bool = False) -> None:
+        if self.app.enable_arrow_keys:
+            super().action_cursor_up(select)
+            
+    def action_cursor_left(self, select: bool = False) -> None:
+        if self.app.enable_arrow_keys:
+            super().action_cursor_left(select)
+            
+    def action_cursor_right(self, select: bool = False) -> None:
+        if self.app.enable_arrow_keys:
+            super().action_cursor_right(select)
+            
+    def action_cursor_word_left(self, select: bool = False) -> None:
+        if self.app.enable_arrow_keys:
+            super().action_cursor_word_left(select)
+            
+    def action_cursor_word_right(self, select: bool = False) -> None:
+        if self.app.enable_arrow_keys:
+            super().action_cursor_word_right(select)

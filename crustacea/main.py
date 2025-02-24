@@ -20,7 +20,7 @@ class CrustaceaApp(app.App):
     BINDINGS = [
         ("ctrl+t", "toggle_auto_tab", "Toggle Automatic Tab"),
         ("ctrl+b", "pause_timer", "Pause Timer"),
-        ("ctrl+n", "toggle_cursor_navigation", "Toggle Cursor Navigation"),
+        ("ctrl+n", "toggle_cursor_navigation", "Enable Cursor Navigation"),
     ]
 
     start_time = monotonic()
@@ -38,11 +38,7 @@ class CrustaceaApp(app.App):
             
             self.editor = edit.CrustaceaTextArea.code_editor(input_text, language="python", theme="vscode_dark")
             self.editor.read_only = True
-            
-            # connect statistics with the editor
-            self.editor.count_error_up = self.statistics.count_error_up
-            self.editor.count_char_up = self.statistics.count_char_up
-            
+  
             yield self.editor
             yield self.statistics
             
@@ -75,9 +71,7 @@ class CrustaceaApp(app.App):
         
     def action_toggle_cursor_navigation(self):
         '''enable the navigation with arrow keys in the code editor'''
-        self.enable_arrow_keys = not self.enable_arrow_keys
-        # Todo: freeze the cursor position
-        
+        self.enable_arrow_keys = not self.enable_arrow_keys        
             
 
 if __name__ == "__main__":

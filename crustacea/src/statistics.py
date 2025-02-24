@@ -1,7 +1,5 @@
 from textual.reactive import Reactive
 import os
-from time import monotonic 
-
 
 import textual.widgets as widg 
 
@@ -41,14 +39,14 @@ class CrustaceaStatistics(widg.Static):
         char_per_minute = round(self.char_counter / (elapsed / 60), 1)
         char_min = f"Char/min: {char_per_minute}"
         # calculate counter statistics
-        char_ctr = f"Char Counter: {self.char_counter}"
-        err_ctr = f"Error Counter: {self.error_counter}"
-        err_rate = f"Error Rate (err/100): {round((self.error_counter / (1 + self.char_counter)) * 100, 2)}" 
-        points = f"Points: {int(self.char_counter * char_per_minute / (1 + self.error_counter))}"
+        char_ctr = f"Char Counter: {self.char_counter:<6}"
+        err_ctr = f"Error Counter: {self.error_counter:<6}"
+        err_rate = f"Error Rate (err/100): {round((self.error_counter / (1 + self.char_counter)) * 100, 2):<6}" 
+        score = f"Score: {int(self.char_counter * char_per_minute / (1 + self.error_counter)):<8}"
         # calculate spacing
-        total_length = len(char_ctr) + len(err_ctr) + len(err_rate) + len(char_min) + len(points)
+        total_length = len(char_ctr) + len(err_ctr) + len(err_rate) + len(char_min) + len(score)
         spacing = (os.get_terminal_size().columns - total_length) // 5
-        return f"{char_ctr}{' ' * spacing}{err_ctr}{' ' * spacing}{err_rate}{' ' * spacing}{char_min}{' ' * spacing}{points}"
+        return f"{char_ctr}{' ' * spacing}{err_ctr}{' ' * spacing}{err_rate}{' ' * spacing}{char_min}{' ' * spacing}{score}"
     
     def count_error_up(self):
         self.error_counter += 1
