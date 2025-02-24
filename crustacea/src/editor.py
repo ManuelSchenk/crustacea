@@ -19,7 +19,6 @@ class CrustaceaTextArea(widg.TextArea):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.type_error_flag = False
-        
 
     async def _on_key(self, event: events.Key) -> None:
         """Handle key presses which correspond to document inserts."""
@@ -74,7 +73,8 @@ class CrustaceaTextArea(widg.TextArea):
             else:
                 self.app.statistics.count_error_up()
                 self.type_error_flag = True if self.app.forced_backspace_error else False
-                # ic(f"The wrong key was pressed: {event.key}")
+                _, cursor_y = self._cursor_offset
+                self.refresh_lines(cursor_y)
     
     def next_row_with_content(self, current_row: int) -> int: 
         """gives back the offset int to the next row with content that is not only spaces"""
@@ -126,7 +126,14 @@ class CrustaceaTextArea(widg.TextArea):
         if self.app.enable_arrow_keys:
             super().action_cursor_word_right(select)
             
- 
+    def action_cursor_line_end(self, select: bool = False) -> None:
+        if self.app.enable_arrow_keys:
+            super().action_cursor_line_end(select)
+            
+    def action_cursor_line_start(self, select: bool = False) -> None:
+        if self.app.enable_arrow_keys:
+            super().action_cursor_line_start(select)
+            
  
     def render_line(self, y: int) -> Strip:
         """Render a single line of the TextArea. Called by Textual.
@@ -254,7 +261,8 @@ class CrustaceaTextArea(widg.TextArea):
             if draw_cursor:
                 if self.type_error_flag:
                     cursor_style=Style(color="#eeeeee", bgcolor="#ff0800", bold=True, blink=False)
-                    self._toggle_cursor_blink_visible()  # to make the cursor visible immediately
+                    self._pause_blink(True)  # to make the cursor visible immediately
+
                 else:
                     cursor_style = theme.cursor_style if theme else None
                     
