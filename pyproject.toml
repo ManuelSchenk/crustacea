@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "crispy-crustacea"
+name = "crustacea"
 version = "0.1.0"
 description = ""
 authors = ["Manuel Schenk <manuel.schenk@bosch.de>"]
@@ -7,8 +7,9 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.13"
-textual = "^1.0.0"
+textual = {extras = ["syntax"], version = "^1.0.0"}
 icecream = "^2.1.4"
+textual-dev = "^1.7.0"
 
 
 [build-system]

@@ -1,0 +1,33 @@
+Stopwatch {
+    layout: horizontal;
+    background: $boost;  /* this is a dynamic css color toggles when switch color mode */
+    min-width: 50;   /* minimal width of each stopwatch widget */
+    margin: 1;  /* this is the space AROUND the each watch */
+    padding: 1; /* this is the space INSIDE the each watch */
+    height: 5;  /* height of each stopwatch widget, remember 1 means one line of your terminal! */
+}
+
+#start {
+    dock: left;
+}
+.started #start {
+    display: none;
+}
+
+#stop {
+    dock: left;
+    display: none;
+}
+.started #stop {
+    display: block;
+}
+
+#reset {
+    dock: right;
+}
+
+TimeDisplay {
+    height: 3;
+    content-align: center middle;
+    text-opacity: 50%;
+}
