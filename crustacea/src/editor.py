@@ -2,15 +2,13 @@
 from textual import events
 import textual.widgets as widg 
 from crustacea.utils.logging import ic 
+from textual.reactive import Reactive
 
 
 class CrustaceaTextArea(widg.TextArea):
     
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
-        self.auto_tab = True
-        
-   
+    auto_tab = Reactive(True)
+
     async def _on_key(self, event: events.Key) -> None:
         """Handle key presses which correspond to document inserts."""
         self._restart_blink()       
@@ -76,10 +74,8 @@ class CrustaceaTextArea(widg.TextArea):
         index = len(line) - len(line.lstrip(" \t"))
         ic(index)
         return index
-    
-    def assign_error_counter(self, count_up_func):
-        self.count_up = count_up_func
         
-            
-            
-                
+    def scroll_cursor_visible(self, center: bool = True, animate: bool = True):
+        """This activates the center and animate of the original textual scroll function"""
+        super().scroll_cursor_visible(center, animate)
+
