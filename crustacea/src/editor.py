@@ -138,8 +138,8 @@ class CrustaceaTextArea(widg.TextArea):
     def render_line(self, y: int) -> Strip:
         """Render a single line of the TextArea. Called by Textual.
 
-        this is the original function from TextArea,
-        i have manipulate only two parts to make the cursor red and the current line bold
+        this is code from the original TEXTUAL TextArea (Copyright (c) 2021 Will McGugan),
+        i have manipulate only two parts to paint the cursor in the current line red and dim all other lines
         """
         theme = self._theme
         if theme:
