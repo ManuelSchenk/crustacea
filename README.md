@@ -11,9 +11,10 @@
 * [x] disable position changes with arrow keys (with a key binding)
 * [ ] add Readme
 * [x] use only one timer for header and statistics
-* [ ] force backspace after type fault
+* [x] force backspace after type fault (red cursor is shown)
 
 
 
 
 * [ ] store the results in a sqlite and visualize in textual
+* [ ] provide beginners lections with reduced key set (create the example text with chatGPT)

@@ -1,6 +1,10 @@
-from time import monotonic
+# ~ @'/?\|-_
+    
 
-from textual import on
+   
+
+from time import monotonic 
+from textual import on 
 from textual.app import App
 from textual.widgets import Footer, Header, Button, Static
 from textual.reactive import Reactive
@@ -21,10 +25,10 @@ class TimeDisplay(Static):
             pause=True   # this starts the timer paused (can be "resume()"")
         )
     
-    def update_time_elapsed(self):
+    def update_time_elapsed(self): 
         self.time_elapsed = (monotonic() - self.start_time) + self.accumulated_time
     
-    def watch_time_elapsed(self):
+    def watch_time_elapsed(self):  # functions with watch_ prefix react on changes of the Reactive variable with the same name
         time = self.time_elapsed
         time, seconds = divmod(time, 60)
         hours, minutes = divmod(time, 60)

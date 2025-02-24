@@ -18,8 +18,9 @@ with open("./tutorials/stopwatch.py", "r") as text:
 class CrustaceaApp(app.App):
     
     BINDINGS = [
+        ("ctrl+s", "pause_timer", "Pause Timer"),
+        ("ctrl+b", "forced_backspace_error", "Disable Backspace Error correction"),
         ("ctrl+t", "toggle_auto_tab", "Toggle Automatic Tab"),
-        ("ctrl+b", "pause_timer", "Pause Timer"),
         ("ctrl+n", "toggle_cursor_navigation", "Enable Cursor Navigation"),
     ]
 
@@ -28,6 +29,8 @@ class CrustaceaApp(app.App):
     pause = False
     time_paused = Reactive(0.00001)
     enable_arrow_keys = False
+    forced_backspace_error = True
+
     
     def compose(self) -> app.ComposeResult:  
         try:
@@ -72,6 +75,10 @@ class CrustaceaApp(app.App):
     def action_toggle_cursor_navigation(self):
         '''enable the navigation with arrow keys in the code editor'''
         self.enable_arrow_keys = not self.enable_arrow_keys        
+        
+    def action_forced_backspace_error(self):
+        '''enable the navigation with arrow keys in the code editor'''
+        self.forced_backspace_error = not self.forced_backspace_error 
             
 
 if __name__ == "__main__":
