@@ -9,7 +9,7 @@ from time import monotonic
 from crustacea.utils.logging import ic 
 
 input_text = ""
-with open("./tutorials/stopwatch.py", "r") as text:
+with open("./crustacea/main.py", "r") as text:
     lines = text.readlines()             
     cleaned_lines = [line.rstrip() for line in lines]  
     input_text = "\n".join(cleaned_lines)  
