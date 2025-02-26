@@ -1,63 +1,33 @@
 
-<!-- PROJECT SHIELDS -->
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
   <a href="https://github.com/ManuelSchenk/crispy-crustacea">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="logo.png" alt="Logo" width="80" height="80">
   </a>
-
-  <h3 align="center">CRUSTACEA</h3>
+  <h1 align="center">CRUSTACEA</h1>
 
   <p align="center">
-    A ten fingers typing training App based on TEXTUAL!
+    A ten fingers typing training TUI-App in python based TEXTUAL!
     <br />
-    &middot;
     <a href="https://github.com/ManuelSchenk/crispy-crustacea/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     &middot;
     <a href="https://github.com/ManuelSchenk/crispy-crustacea/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
-
-
-
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contact">Roadmap</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
-
-
+<br />
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
-
 This Application is for people who wants to learn or improve there ten fingers typing skill.
 You can use your own texts or scripts in your favorite programming language to get better in your everyday working.
 
-it provides the following:
+<div align="center">
+    <img src="crustacea.png" alt="Logo" width="924" height="751">
+</div>
+
+#### It provides the following features:
 * an terminal based editor 
 * uses the color theme of "vscode_dark"
 * syntax highlighting for the most programming languages with tree-sitter
@@ -65,10 +35,11 @@ it provides the following:
 * multiple options are provided like "auto tabbing" and "force a backslash after a typing failure"
 * you can enable cursor navigation to jump to the part of your file you want to train with 
 
+ 
 Of course, the app do not provide all features i have planed (see [[roadmap]]) or you are looking for now since your needs may be different. 
 So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. 
 
-
+<br />
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -157,7 +128,7 @@ Project Link: [https://github.com/ManuelSchenk/crispy-crustacea](https://github.
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-This app is built on [Textual](https://textual.textualize.io/), an innovative framework that empowers developers to create modern, interactive, and highly customizable terminal user interfaces. Leveraging Python’s asynchronous capabilities and the advanced rendering features of the Rich library, Textual streamlines the development of dynamic, responsive, and visually engaging TUI applications.
+This app is built on [Textual](https://textual.textualize.io/), an innovative framework from **Will McGugan** that empowers developers to create modern, interactive, and highly customizable terminal user interfaces. Leveraging Python’s asynchronous capabilities and the advanced rendering features of the Rich library, Textual streamlines the development of dynamic, responsive, and visually engaging TUI applications.
 
 For more information and resources, please refer to the following documentation:
 - [Textual Documentation](https://textual.textualize.io/)
@@ -169,15 +140,9 @@ For more information and resources, please refer to the following documentation:
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[forks-shield]: https://img.shields.io/github/forks/ManuelSchenk/crustacea.svg?style=for-the-badge
-[forks-url]: https://github.com/ManuelSchenk/crispy-crustacea/network/members
-[stars-shield]: https://img.shields.io/github/stars/ManuelSchenk/crustacea.svg?style=for-the-badge
-[stars-url]: https://github.com/ManuelSchenk/crispy-crustacea/stargazers
-[issues-shield]: https://img.shields.io/github/issues/ManuelSchenk/crustacea.svg?style=for-the-badge
 [issues-url]: https://github.com/ManuelSchenk/crispy-crustacea/issues
-
-[linkedin-url]: https://linkedin.com/in/ManuelSchenk
-[product-screenshot]: images/screenshot.png
+[linkedin-url]: https://www.linkedin.com/in/manuel-schenk-48246117a/
+[product-screenshot]: crustasea.png
 
 
 
