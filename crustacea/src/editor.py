@@ -111,7 +111,10 @@ class CrustaceaTextArea(widg.TextArea):
     def render_line(self, y: int) -> Strip:
         # dim all lines except the cursor_line
         self.styles.text_style = Style.combine([self.styles.text_style, Style(dim=True)])
-        self._theme.cursor_line_style = Style.combine([self._theme.cursor_line_style, Style(dim=False)])
+        if self.app.pause:
+            self._theme.cursor_line_style = Style.combine([self._theme.cursor_line_style, Style(dim=True)])
+        else:    
+            self._theme.cursor_line_style = Style.combine([self._theme.cursor_line_style, Style(dim=False)])
         strip = super().render_line(y)
         return strip
         
