@@ -2,13 +2,10 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/ManuelSchenk/crispy-crustacea">
-    <img src="logo.png" alt="Logo" width="80" height="80">
-  </a>
+  <img src="logo.png" alt="Logo" width="80" height="80">
   <h1 align="center">CRUSTACEA</h1>
-
   <p align="center">
-    A ten fingers typing training TUI-App in python based TEXTUAL!
+    A ten fingers typing training TUI-App in python based on TEXTUAL!
     <br />
     <a href="https://github.com/ManuelSchenk/crispy-crustacea/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     &middot;
@@ -20,8 +17,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This Application is for people who wants to learn or improve there ten fingers typing skill.
-You can use your own texts or scripts in your favorite programming language to get better in your everyday working.
+This Application is for people who wants to learn or improve there ten fingers typing skills.
+You can use your own texts or scripts in your favorite programming language with common syntax highlighting to get faster and more efficient in your everyday working.
 
 <div align="center">
     <img src="crustacea.png" alt="Logo" width="924" height="751">
@@ -35,6 +32,10 @@ You can use your own texts or scripts in your favorite programming language to g
 * multiple options are provided like "auto tabbing" and "force a backslash after a typing failure"
 * you can enable cursor navigation to jump to the part of your file you want to train with 
 
+#### Example TUI visualisation:
+<div align="center">
+    <img src="example.png" alt="Logo" width="915" height="634">
+</div>
  
 Of course, the app do not provide all features i have planed (see [[roadmap]]) or you are looking for now since your needs may be different. 
 So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. 
