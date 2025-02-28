@@ -1,156 +1,82 @@
-
-from textual import events
-import textual.widgets as widg 
-from crustacea.utils.logging import ic 
+from textual.screen import Screen
+from textual.widgets import Footer
+import textual.app as app
 from textual.reactive import Reactive
-from rich.style import Style
-from textual.strip import Strip
-from rich.text import Text
-from textual.document._document import _utf8_encode
-from textual.expand_tabs import expand_text_tabs_from_widths
-from textual.widgets._text_area import build_byte_to_codepoint_dict
 
-class CrustaceaTextArea(widg.TextArea):
-     
-      
-    auto_tab = Reactive(True)
+
+from crustacea.utils.logging import ic 
+from crustacea.src.statistics import CrustaceaStatistics
+from crustacea.src.header import CrustaceaHeader
+import crustacea.src.text_area as edit
+from time import monotonic 
+
+
+
+class EditorScreen(Screen):
     
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
-        self.type_error_flag = False
-        self.original_theme_cursor_style = self._theme.cursor_style
+    BINDINGS = [
+        ("ctrl+s", "pause_timer", "Pause Timer"),
+        ("ctrl+b", "forced_backspace_error", "Disable Backspace Error correction"),
+        ("ctrl+t", "toggle_auto_tab", "Toggle Automatic Tab"),
+        ("ctrl+n", "toggle_cursor_navigation", "Enable Cursor Navigation"),
+    ]
 
-    async def _on_key(self, event: events.Key) -> None:
-        """Handle key presses which correspond to document inserts."""
-        # block everything if an type error is active till you press backspace
-        if self.type_error_flag:
-            if event.key == "backspace":
-                self.type_error_flag = False
-                self.toggle_cursor_style()
-            else: 
-                self.app.statistics.count_error_up()
-                return
+    time_elapsed = Reactive(0.00001)
+    time_paused = Reactive(0.00001)
+
+    
+    def __init__(self, input_text: str, language: str, **kwargs):
+        super().__init__(**kwargs)
+        self.input_text = input_text
+        self.pause = False
+        self.language = language
+        self.enable_arrow_keys = False
+        self.forced_backspace_error = True
+        self.start_time = monotonic()
+
+
+    def compose(self) -> app.ComposeResult:  
+        try:
+            yield CrustaceaHeader()
+            yield Footer()
+            self.statistics = CrustaceaStatistics()
             
-        insert_values = {
-            "enter": "\n",
-        }
-        if self.tab_behavior == "indent":  # this is true for code_editor
-            if event.key == "escape":
-                event.stop()
-                event.prevent_default()
-                self.screen.focus_next()
-                return
-            if self.indent_type == "tabs":  # this is not default
-                insert_values["tab"] = "\t"
-            else:
-                insert_values["tab"] = " " * self._find_columns_to_next_tab_stop()
+            self.editor = edit.CrustaceaTextArea.code_editor(self.input_text, language=self.language, theme="vscode_dark")
+            self.editor.read_only = True
+  
+            yield self.editor
+            yield self.statistics
+            
+        except Exception as e:
+            ic(e)
+            
+    def update_time_elapsed(self): 
+        if self.pause:
+            self.start_time = monotonic() - self.time_elapsed
+        else: 
+            self.time_elapsed = monotonic() - self.start_time
+            self.editor.focus()
+    
+    def on_mount(self): 
+        self.update_timer = self.set_interval(  # calls the method given in an interval
+            interval=1/2,
+            callback=self.update_time_elapsed, 
+            pause=False  
+        )
 
-        if event.is_printable or event.key in insert_values:
-            event.stop()
-            event.prevent_default()
-            insert = insert_values.get(event.key, event.character)
-            assert insert is not None
-
-            # The following is the custom crustacea logic:
-            current_row, current_col = self.cursor_location
-            next_char_position =  (
-                    (current_row, current_col), 
-                    (current_row, current_col + len(insert))
-                )
-            expected_char = self.document.get_text_range(*next_char_position)
-            if insert == expected_char:
-                self.document.replace_range(
-                        *next_char_position,
-                        insert
-                    )
-                self.move_cursor_relative(0, len(insert))
-                self.app.statistics.count_char_up()
-            elif insert == "\n" and current_col == len(self.document[current_row]):
-                next_row = 1 + (self.next_row_with_content(current_row))
-                first_char = self.first_char_in_row(next_row)
-                self.move_cursor((next_row, first_char))
-                self.app.statistics.count_char_up()
-            else: # this is the case if an typing fault is made
-                self.app.statistics.count_error_up()
-                self.type_error_flag = True if self.app.forced_backspace_error else False
-                # change cursor color to read and refresh the line immediately
-                self.toggle_cursor_style()
-                
-    def toggle_cursor_style(self):
-        """change the cursor color to red and refresh the line immediately"""
-        if self.type_error_flag:
-            self._theme.cursor_style = Style(color="#eeeeee", bgcolor="#ff0800", bold=True, blink=False)
-            self._pause_blink(True)  
-        else:
-            self._theme.cursor_style = self.original_theme_cursor_style
-            self._pause_blink(True)
-            self._restart_blink()
-        _, cursor_y = self._cursor_offset
-        self.refresh_lines(cursor_y)
-    
-    def next_row_with_content(self, current_row: int) -> int: 
-        """gives back the offset int to the next row with content that is not only spaces"""
-        if len(set(self.document[current_row + 1])) <= 1: 
-            current_row = self.next_row_with_content(current_row + 1)
-        return current_row
-    
-    def first_char_in_row(self, row):
-        """
-        Return the index of the first non-space, non-tab character in the given line.
-        """
-        if not self.auto_tab:
-            return 0
-        line = self.document[row]
-        # Calculate the number of leading spaces and tabs
-        index = len(line) - len(line.lstrip(" \t"))
-        ic(index)
-        return index
-    
-    
-    # overwritten textual text_area functions ########################
-    def render_line(self, y: int) -> Strip:
-        # dim all lines except the cursor_line
-        self.styles.text_style = Style.combine([self.styles.text_style, Style(dim=True)])
-        if self.app.pause:
-            self._theme.cursor_line_style = Style.combine([self._theme.cursor_line_style, Style(dim=True)])
-        else:    
-            self._theme.cursor_line_style = Style.combine([self._theme.cursor_line_style, Style(dim=False)])
-        strip = super().render_line(y)
-        return strip
+    def action_toggle_auto_tab(self):
+        '''toggles the usage of tabs at line start after return at line end'''
+        self.editor.auto_tab = not self.editor.auto_tab
+                    
+    def action_pause_timer(self):
+        '''paused the elapse timer'''
+        self.pause = not self.pause
+        self.editor.disabled = not self.editor.disabled
         
-    def scroll_cursor_visible(self, center: bool = True, animate: bool = True):
-        """This activates the center and animate of the original textual scroll function"""
-        super().scroll_cursor_visible(center, animate)
-
-    def action_cursor_down(self, select: bool = False) -> None:
-        if self.app.enable_arrow_keys:
-            super().action_cursor_down(select)
-            
-    def action_cursor_up(self, select: bool = False) -> None:
-        if self.app.enable_arrow_keys:
-            super().action_cursor_up(select)
-            
-    def action_cursor_left(self, select: bool = False) -> None:
-        if self.app.enable_arrow_keys:
-            super().action_cursor_left(select)
-            
-    def action_cursor_right(self, select: bool = False) -> None:
-        if self.app.enable_arrow_keys:
-            super().action_cursor_right(select)
-            
-    def action_cursor_word_left(self, select: bool = False) -> None:
-        if self.app.enable_arrow_keys:
-            super().action_cursor_word_left(select)
-            
-    def action_cursor_word_right(self, select: bool = False) -> None:
-        if self.app.enable_arrow_keys:
-            super().action_cursor_word_right(select)
-            
-    def action_cursor_line_end(self, select: bool = False) -> None:
-        if self.app.enable_arrow_keys:
-            super().action_cursor_line_end(select)
-            
-    def action_cursor_line_start(self, select: bool = False) -> None:
-        if self.app.enable_arrow_keys:
-            super().action_cursor_line_start(select)
+    def action_toggle_cursor_navigation(self):
+        '''enable the navigation with arrow keys in the code editor'''
+        self.enable_arrow_keys = not self.enable_arrow_keys        
         
+    def action_forced_backspace_error(self):
+        '''enable the navigation with arrow keys in the code editor'''
+        self.forced_backspace_error = not self.forced_backspace_error 
