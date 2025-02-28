@@ -3,7 +3,7 @@
 <br />
 <div align="center">
   <img src="logo.png" alt="Logo" width="80" height="80">
-  <h1 align="center">CRUSTACEA</h1>
+  <h1 style="margin-top: 0;">CRUSTACEA</h1>
   <p align="center">
     A ten fingers typing training TUI-App in python based on TEXTUAL!
     <br />
@@ -25,12 +25,14 @@ You can use your own texts or scripts in your favorite programming language with
 </div>
 
 #### It provides the following features:
-* an terminal based editor 
-* uses the color theme of "vscode_dark"
-* syntax highlighting for the most programming languages with tree-sitter
-* provides live statistics about your typing performance
-* multiple options are provided like "auto tabbing" and "force a backslash after a typing failure"
+* a terminal based editor (TUI) 
+* on startup you can choose the text you want to train on. Use on of the example scripts or add your own in the `texts` folder 
+* using the default color theme of "vscode_dark" (others are possible but not implemented yet)
+* syntax highlighting for the most programming languages with tree-sitter (.js, .ts, .py, .go, .c, .cs, .cpp, .r, .kt, .lua, .erl, ...)
+* provides some live statistics about your typing performance (Error Rate, Score, ...)
+* multiple "typing options" are provided like "auto tabbing" and "force a backslash after a typing failure", to customize your difficulty level
 * you can enable cursor navigation to jump to the part of your file you want to train with 
+
 
 #### Example TUI visualisation:
 <div align="center">
@@ -45,8 +47,7 @@ So I'll be adding more in the near future. You may also suggest changes by forki
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+
 
 ### Prerequisites
 
@@ -60,7 +61,7 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    git clone https://github.com/ManuelSchenk/crispy-crustacea.git
    ```
-2. Change into the project directory
+2. Change into the project working directory
    ```sh
    cd crispy-crustacea
    ```
@@ -68,22 +69,23 @@ To get a local copy up and running follow these simple example steps.
    ```js
    poetry install
    ```
-4. run CRUSTACEA with python
+4. [optional] place your own scripts in `./crustacea/texts` to train on them.
+5. run CRUSTACEA with python
    ```sh
    poetry run python ./crustacea/main.py
    ```
 
 
-
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-To run CRUSTASEA with your own script use the following command:  (TODO)
+To run CRUSTASEA with the following command:
    ```sh
-   poetry run python ./crustacea/main.py <path to your script>
+   poetry run python ./crustacea/main.py 
    ```
+HINT: If you want to train in your own scripts just copy them into `./crustacea/texts` 
 
-In the Footer you see all the options which can be toggled in and out with keyboard shortcuts:
+In the Footer you see all the options which can be toggled with keyboard shortcuts:
 * `ctrl+s` - **Pause Timer, if you want to make a break while training on a text**
 * `ctrl+b` - **Disable the default behavior: if your make a typing fault you have to correct it with Backspace**
 * `ctrl+t` - **If your press Enter at the end of a line you jump to the next not empty line. If want to type the TABS manually you can use this**
@@ -93,9 +95,9 @@ In the Footer you see all the options which can be toggled in and out with keybo
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] enable arguments with **typer** to choose the file you want to train with
-- [ ] store the results/scores in a sqlite and visualize the history of your last results 
-- [ ] provide beginners lections with reduced key set (create the example text with chatGPT)
+- [x] provide beginners lections with reduced key set 
+- [ ] store the results/scores in a sqlite 
+- [ ] visualize the score history of your last results per file
 
 See the [open issues](https://github.com/ManuelSchenk/crispy-crustacea/issues) for a full list of proposed features (and known issues).
 

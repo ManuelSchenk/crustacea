@@ -66,6 +66,11 @@ class CrustaceaTextArea(widg.TextArea):
                     )
                 self.move_cursor_relative(0, len(insert))
                 self.screen.statistics.count_char_up()
+            elif self.cursor_location == self.document.end: # end of file case
+                pass     
+                       
+                # TODO: show a note with statistics
+                
             elif insert == "\n" and current_col == len(self.document[current_row]):
                 next_row = 1 + (self.next_row_with_content(current_row))
                 first_char = self.first_char_in_row(next_row)
@@ -90,7 +95,7 @@ class CrustaceaTextArea(widg.TextArea):
         self.refresh_lines(cursor_y)
     
     def next_row_with_content(self, current_row: int) -> int: 
-        """gives back the offset int to the next row with content that is not only spaces"""
+        """gives back the offset int to the next row with content that is not only spaces""" 
         if len(set(self.document[current_row + 1])) <= 1: 
             current_row = self.next_row_with_content(current_row + 1)
         return current_row
