@@ -35,7 +35,7 @@ class CrustaceaStatistics(widg.Static):
         
     def updated_statistics(self):
         # poll timer from main app
-        elapsed = self.app.time_elapsed
+        elapsed = self.screen.time_elapsed
         char_per_minute = round(self.char_counter / (elapsed / 60), 1)
         char_min = f"Char/min: {char_per_minute}"
         # calculate counter statistics

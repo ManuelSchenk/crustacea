@@ -25,7 +25,7 @@ class HeaderClock(Widget):
 
     def update_time_elapsed(self): 
         """polls the current timer from the main app"""
-        self.elapsed = self.app.time_elapsed
+        self.elapsed = self.screen.time_elapsed
     
     def on_mount(self):
         self.update_timer = self.set_interval(  
