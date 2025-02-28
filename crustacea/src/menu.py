@@ -45,6 +45,8 @@ class MenuScreen(Screen):
             #     (radio for radio in radio_set.children if radio.pressed), None
             # )
             
+            # TODO: disable submit when no radio button is pressed
+            
             for radio in radio_set.children:
                 if radio.value:
                     file_name = radio.label._text[0]

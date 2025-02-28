@@ -8,9 +8,9 @@ class Crustacea(app.App):
     def on_mount(self) -> None:
         # Start with the menu screen.
         self.push_screen(MenuScreen())
-    
 
+        
 if __name__ == "__main__":
-    Crustacea().run(mouse=False)
+    Crustacea().run(mouse=True)
     # ToDo make mouse available in the menu but not in the text_area/editor
         

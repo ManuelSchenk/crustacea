@@ -5,7 +5,6 @@ from crustacea.utils.logging import ic
 from textual.reactive import Reactive
 from rich.style import Style
 from textual.strip import Strip
-from rich.text import Text
 from textual.document._document import _utf8_encode
 from textual.expand_tabs import expand_text_tabs_from_widths
 from textual.widgets._text_area import build_byte_to_codepoint_dict
@@ -19,6 +18,8 @@ class CrustaceaTextArea(widg.TextArea):
         super().__init__(*args, **kwargs)
         self.type_error_flag = False
         self.original_theme_cursor_style = self._theme.cursor_style
+        # suppress all mouse events on screen start
+        self.app._driver._disable_mouse_support()
 
     async def _on_key(self, event: events.Key) -> None:
         """Handle key presses which correspond to document inserts."""
@@ -153,4 +154,3 @@ class CrustaceaTextArea(widg.TextArea):
     def action_cursor_line_start(self, select: bool = False) -> None:
         if self.screen.enable_arrow_keys:
             super().action_cursor_line_start(select)
-        
