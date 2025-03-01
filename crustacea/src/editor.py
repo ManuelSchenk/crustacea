@@ -41,7 +41,11 @@ class EditorScreen(Screen):
             yield Footer()
             self.statistics = CrustaceaStatistics()
             
-            self.editor = edit.CrustaceaTextArea.code_editor(self.input_text, language=self.language, theme="vscode_dark")
+            self.editor = edit.CrustaceaTextArea.code_editor(
+                text=self.input_text, 
+                language=self.language, 
+                theme="vscode_dark"
+                )
             self.editor.read_only = True
   
             yield self.editor

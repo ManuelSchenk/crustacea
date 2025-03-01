@@ -19,9 +19,11 @@ class CrustaceaStatistics(widg.Static):
         width: 100%
     }
     """   
-    # reactive counter will automatically update the static element if changed
-    error_counter = Reactive(0)
-    char_counter = Reactive(0)
+    
+    def __init__(self):
+        super().__init__()
+        self.error_counter = 0
+        self.char_counter = 0
     
     def on_mount(self):
         self.update_timer = self.set_interval(  # calls the callback given in an interval
@@ -32,21 +34,39 @@ class CrustaceaStatistics(widg.Static):
     
     def update_time_elapsed(self): 
         self.update(self.updated_statistics())
-        
+    
     def updated_statistics(self):
         # poll timer from main app
         elapsed = self.screen.time_elapsed
         char_per_minute = round(self.char_counter / (elapsed / 60), 1)
-        char_min = f"Char/min: {char_per_minute}"
-        # calculate counter statistics
-        char_ctr = f"Char Counter: {self.char_counter:<6}"
-        err_ctr = f"Error Counter: {self.error_counter:<6}"
-        err_rate = f"Error Rate (err/100): {round((self.error_counter / (1 + self.char_counter)) * 100, 2):<6}" 
-        score = f"Score: {int(self.char_counter * char_per_minute / (1 + self.error_counter)):<8}"
-        # calculate spacing
-        total_length = len(char_ctr) + len(err_ctr) + len(err_rate) + len(char_min) + len(score)
-        spacing = (os.get_terminal_size().columns - total_length) // 5
-        return f"{char_ctr}{' ' * spacing}{err_ctr}{' ' * spacing}{err_rate}{' ' * spacing}{char_min}{' ' * spacing}{score}"
+        
+        # create output strings
+        char_per_min_str = f"Char/min: {char_per_minute:<6}"
+        char_ctr_str = f"Char Counter: {self.char_counter:<6}"
+        err_ctr_str = f"Error Counter: {self.error_counter:<6}"
+        err_rate_str = f"Error Rate (%): {round((self.error_counter / (1 + self.char_counter)) * 100, 2):<6}" 
+        score_str = f"Score: {self.score(char_per_minute):<8}"
+
+        output_strings = [
+            f"{char_ctr_str}",
+            f"{err_ctr_str}",
+            f"{err_rate_str}",
+            f"{char_per_min_str}",
+            f"{score_str}"
+        ]
+        self.space = self.spacing(output_strings)
+
+        return f"{' ' * self.space}".join(output_strings)
+    
+    def score(self, char_per_minute):
+        base_points = self.char_counter * char_per_minute
+        reducer = self.error_counter * 10
+        difficulty = 1 if self.screen.forced_backspace_error else 0.7
+        return max(int((base_points - reducer) * difficulty), 0)
+    
+    def spacing(self, output_strings) -> int:
+        total_string_length = len("".join(output_strings))
+        return ((os.get_terminal_size().columns - total_string_length) // 5)
     
     def count_error_up(self):
         self.error_counter += 1
