@@ -39,29 +39,26 @@ class CrustaceaStatistics(widg.Static):
         # poll timer from main app
         elapsed = self.screen.time_elapsed
         char_per_minute = round(self.char_counter / (elapsed / 60), 1)
-        
-        # create output strings
-        char_per_min_str = f"Char/min: {char_per_minute:<6}"
-        char_ctr_str = f"Char Counter: {self.char_counter:<6}"
-        err_ctr_str = f"Error Counter: {self.error_counter:<6}"
-        err_rate_str = f"Error Rate (%): {round((self.error_counter / (1 + self.char_counter)) * 100, 2):<6}" 
-        score_str = f"Score: {self.score(char_per_minute):<8}"
 
         output_strings = [
-            f"{char_ctr_str}",
-            f"{err_ctr_str}",
-            f"{err_rate_str}",
-            f"{char_per_min_str}",
-            f"{score_str}"
+            f"Char Counter: {self.char_counter:<6}",
+            f"Error Counter: {self.error_counter:<6}",
+            f"Error Rate (%): {round((self.error_counter / (1 + self.char_counter)) * 100, 2):<6}",
+            f"Char/min: {char_per_minute:<6}",
+            f"Score: {self.score(char_per_minute):<8}"
         ]
         self.space = self.spacing(output_strings)
 
         return f"{' ' * self.space}".join(output_strings)
     
     def score(self, char_per_minute):
-        base_points = self.char_counter * char_per_minute
+        base_points = (self.char_counter * char_per_minute // 10)
         reducer = self.error_counter * 10
-        difficulty = 1 if self.screen.forced_backspace_error else 0.7
+        difficulty = 1 - (
+                (0.4 * self.screen.auto_backspace) +
+                (0.2 * self.screen.auto_return) +
+                (0.1 * self.screen.auto_tab)
+                )
         return max(int((base_points - reducer) * difficulty), 0)
     
     def spacing(self, output_strings) -> int:

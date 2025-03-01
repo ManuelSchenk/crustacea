@@ -12,7 +12,6 @@ from textual.widgets._text_area import build_byte_to_codepoint_dict
 class CrustaceaTextArea(widg.TextArea):
      
       
-    auto_tab = Reactive(True)
     
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -59,6 +58,8 @@ class CrustaceaTextArea(widg.TextArea):
                     (current_row, current_col + len(insert))
                 )
             expected_char = self.document.get_text_range(*next_char_position)
+            
+            # if the right character is typed
             if insert == expected_char:
                 self.document.replace_range(
                         *next_char_position,
@@ -66,21 +67,33 @@ class CrustaceaTextArea(widg.TextArea):
                     )
                 self.move_cursor_relative(0, len(insert))
                 self.screen.statistics.count_char_up()
-            elif self.cursor_location == self.document.end: # end of file case
+                
+                # if auto return is enabled jump from last line clumn to next char available
+                if self.screen.auto_return and current_col == len(self.document[current_row]) - 1:
+                    next_row = 1 + (self.next_row_with_content(current_row))
+                    first_char = self.first_char_in_row(next_row)
+                    self.move_cursor((next_row, first_char))
+            
+            # end of file case, time to show statistics
+            elif self.cursor_location == self.document.end: 
                 pass     
                        
                 # TODO: show a note with statistics
-                
+            
+            # when return is pressed at the end of a line
             elif insert == "\n" and current_col == len(self.document[current_row]):
                 next_row = 1 + (self.next_row_with_content(current_row))
                 first_char = self.first_char_in_row(next_row)
                 self.move_cursor((next_row, first_char))
                 self.screen.statistics.count_char_up()
-            else: # this is the case if an typing fault is made
+                
+            # this is the case if an typing fault is made  
+            else: 
                 self.screen.statistics.count_error_up()
-                self.type_error_flag = True if self.screen.forced_backspace_error else False
+                self.type_error_flag = True if not self.screen.auto_backspace else False
                 # change cursor color to read and refresh the line immediately
                 self.toggle_cursor_style()
+            
                 
     def toggle_cursor_style(self):
         """change the cursor color to red and refresh the line immediately"""
@@ -104,12 +117,11 @@ class CrustaceaTextArea(widg.TextArea):
         """
         Return the index of the first non-space, non-tab character in the given line.
         """
-        if not self.auto_tab:
+        if not self.screen.auto_tab:
             return 0
         line = self.document[row]
         # Calculate the number of leading spaces and tabs
         index = len(line) - len(line.lstrip(" \t"))
-        ic(index)
         return index
     
     

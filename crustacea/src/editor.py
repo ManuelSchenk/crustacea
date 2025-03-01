@@ -14,11 +14,14 @@ from time import monotonic
 
 class EditorScreen(Screen):
     
+    # TODO add a auto return binding
+    
     BINDINGS = [
-        ("ctrl+s", "pause_timer", "Pause Timer"),
-        ("ctrl+b", "forced_backspace_error", "Disable Backspace Error correction"),
-        ("ctrl+t", "toggle_auto_tab", "Toggle Automatic Tab"),
-        ("ctrl+n", "toggle_cursor_navigation", "Enable Cursor Navigation"),
+        ("ctrl+s", "pause_timer", "Pause"),
+        ("ctrl+b", "auto_backspace", "Enable Automatic Backspace"),
+        ("ctrl+r", "auto_return", "Enable Automatic Return"),
+        ("ctrl+t", "auto_tab", "Disable Automatic Tab"),
+        ("ctrl+n", "cursor_navigation", "Enable Cursor Navigation"),
     ]
 
     time_elapsed = Reactive(0.00001)
@@ -30,9 +33,13 @@ class EditorScreen(Screen):
         self.input_text = input_text
         self.pause = False
         self.language = language
-        self.enable_arrow_keys = False
-        self.forced_backspace_error = True
         self.start_time = monotonic()
+        
+        # initial states for the key bindings
+        self.enable_arrow_keys = False
+        self.auto_backspace = False
+        self.auto_return = False
+        self.auto_tab = True
 
 
     def compose(self) -> app.ComposeResult:  
@@ -41,14 +48,14 @@ class EditorScreen(Screen):
             yield Footer()
             self.statistics = CrustaceaStatistics()
             
-            self.editor = edit.CrustaceaTextArea.code_editor(
+            self.text_area = edit.CrustaceaTextArea.code_editor(
                 text=self.input_text, 
                 language=self.language, 
                 theme="vscode_dark"
                 )
-            self.editor.read_only = True
+            self.text_area.read_only = True
   
-            yield self.editor
+            yield self.text_area
             yield self.statistics
             
         except Exception as e:
@@ -59,7 +66,7 @@ class EditorScreen(Screen):
             self.start_time = monotonic() - self.time_elapsed
         else: 
             self.time_elapsed = monotonic() - self.start_time
-            self.editor.focus()
+            self.text_area.focus()
     
     def on_mount(self): 
         self.update_timer = self.set_interval(  # calls the method given in an interval
@@ -68,19 +75,23 @@ class EditorScreen(Screen):
             pause=False  
         )
 
-    def action_toggle_auto_tab(self):
-        '''toggles the usage of tabs at line start after return at line end'''
-        self.editor.auto_tab = not self.editor.auto_tab
+    def action_auto_tab(self):
+        '''toggles the usage of TAB at line start after return at end of line'''
+        self.auto_tab = not self.auto_tab
+
+    def action_auto_return(self):
+        '''toggles the usage of automatic RETURN at end of line'''
+        self.auto_return = not self.auto_return
+        
+    def action_auto_backspace(self):
+        '''enable the navigation with arrow keys in the code editor'''
+        self.auto_backspace = not self.auto_backspace 
                     
     def action_pause_timer(self):
         '''paused the elapse timer'''
         self.pause = not self.pause
-        self.editor.disabled = not self.editor.disabled
+        self.text_area.disabled = not self.text_area.disabled
         
-    def action_toggle_cursor_navigation(self):
+    def action_cursor_navigation(self):
         '''enable the navigation with arrow keys in the code editor'''
         self.enable_arrow_keys = not self.enable_arrow_keys        
-        
-    def action_forced_backspace_error(self):
-        '''enable the navigation with arrow keys in the code editor'''
-        self.forced_backspace_error = not self.forced_backspace_error 
