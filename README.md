@@ -21,17 +21,18 @@ This Application is for people who wants to learn or improve there ten fingers t
 You can use your own texts or scripts in your favorite programming language with common syntax highlighting to get faster and more efficient in your everyday working.
 
 <div align="center">
-    <img src="crustacea.png" alt="Logo" width="924" height="751">
+    <img src="crustacea.jpg" alt="Logo" width="924" height="751">
 </div>
 
 #### It provides the following features:
-* a terminal based editor (TUI) 
-* on startup you can choose the text you want to train on. Use on of the example scripts or add your own in the `texts` folder 
-* using the default color theme of "vscode_dark" (others are possible but not implemented yet)
-* syntax highlighting for the most programming languages with tree-sitter (.js, .ts, .py, .go, .c, .cs, .cpp, .r, .kt, .lua, .erl, ...)
+* its a terminal based text editor (TUI).
+* on startup you can choose the text you want to train on. Use one of the example scripts or add your own in the `crustacea/texts` folder before starting the app.
+* It uses the default color theme of "vscode_dark" (others are possible but not implemented yet)
+* It provides syntax highlighting for the most programming languages and file formats with tree-sitter (bash,css,go,html,java,javascript,json,markdown,python,regex,rust,sql,toml,xml,yaml)
 * provides some live statistics about your typing performance (Error Rate, Score, ...)
-* multiple "typing options" are provided like "auto tabbing" and "force a backslash after a typing failure", to customize your difficulty level
+* multiple difficulty levels in form of "typing options" are provided like **auto tabbing**, **auto return** and **auto backslash** (as default a backslash is forced after each typing failure), to customize your difficulty level
 * you can enable cursor navigation to jump to the part of your file you want to train with 
+* after a lection is finished it shows you the current results (statistics) in numbers and also "sparklines" of the history of your previous results to visualize your progress.
 
 
 #### Example TUI visualisation:
@@ -83,7 +84,7 @@ To run CRUSTASEA with the following command:
    ```sh
    poetry run python ./crustacea/main.py 
    ```
-HINT: If you want to train in your own scripts just copy them into `./crustacea/texts` 
+HINT: If you want to train in your own scripts just copy the file into `./crustacea/texts` before you start the app!
 
 In the Footer you see all the options which can be toggled with keyboard shortcuts:
 * `ctrl+s` - **Pause Timer, if you want to make a break while training on a text**
@@ -91,13 +92,19 @@ In the Footer you see all the options which can be toggled with keyboard shortcu
 * `ctrl+t` - **If your press Enter at the end of a line you jump to the next not empty line. If want to type the TABS manually you can use this**
 * `ctrl+n` - **Enables the Cursor Navigation, so you can jump to the next part of your text you want to train your skills on**
 
+Your current statistics will be shown above the footer line.
+Your history and progress will be visualized at the end of each lecture:
+<div align="center">
+    <img src="results_vis.jpg" alt="Logo" width="1213" height="620">
+</div>
+
 
 <!-- ROADMAP -->
 ## Roadmap
 
 - [x] provide beginners lections with reduced key set 
-- [ ] store the results/scores in a sqlite 
-- [ ] visualize the score history of your last results per file
+- [x] store the results/scores in a sqlite 
+- [x] visualize the score history of your last results per file
 
 See the [open issues](https://github.com/ManuelSchenk/crispy-crustacea/issues) for a full list of proposed features (and known issues).
 

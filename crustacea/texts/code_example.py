@@ -9,10 +9,10 @@ from crustacea.src.language_map import language_map
 
 text_folder = Path("./crustacea/texts")
 
-class MenuScreen(Screen):
+class FileMenuScreen(Screen):
     
     DEFAULT_CSS = """
-    MenuScreen {
+    FileMenuScreen {
         align: center middle;
     }
     #radio_set {
