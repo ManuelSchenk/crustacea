@@ -1,7 +1,8 @@
-from textual.reactive import Reactive
 import os
-
 import textual.widgets as widg 
+
+from crustacea.utils.logging import ic 
+from crustacea.src.results_storage import StorageContext
 
 
 class CrustaceaStatistics(widg.Static):    
@@ -24,6 +25,8 @@ class CrustaceaStatistics(widg.Static):
         super().__init__()
         self.error_counter = 0
         self.char_counter = 0
+        self.char_per_minute = 0.0
+        self.error_rate = 0.0
     
     def on_mount(self):
         self.update_timer = self.set_interval(  # calls the callback given in an interval
@@ -38,21 +41,33 @@ class CrustaceaStatistics(widg.Static):
     def updated_statistics(self):
         # poll timer from main app
         elapsed = self.screen.time_elapsed
-        char_per_minute = round(self.char_counter / (elapsed / 60), 1)
+        self.char_per_minute = round(self.char_counter / (elapsed / 60), 1)
+        self.error_rate = round((self.error_counter / (1 + self.char_counter)) * 100, 2)
 
         output_strings = [
             f"Char Counter: {self.char_counter:<6}",
             f"Error Counter: {self.error_counter:<6}",
-            f"Error Rate (%): {round((self.error_counter / (1 + self.char_counter)) * 100, 2):<6}",
-            f"Char/min: {char_per_minute:<6}",
-            f"Score: {self.score(char_per_minute):<8}"
+            f"Error Rate (%): {self.error_rate:<6}",
+            f"Char/min: {self.char_per_minute:<6}",
+            f"Score: {self.score():<8}"
         ]
         self.space = self.spacing(output_strings)
 
         return f"{' ' * self.space}".join(output_strings)
+
+    def store_stats(self):
+        with StorageContext() as db:
+            row_id = db.insert_result(
+                filename=self.screen.filename,
+                char_counter=self.char_counter,
+                error_counter=self.error_counter,
+                error_rate=self.error_rate,
+                char_per_min=self.char_per_minute,
+                score=self.score(),
+                )
     
-    def score(self, char_per_minute):
-        base_points = (self.char_counter * char_per_minute // 10)
+    def score(self):
+        base_points = (self.char_counter * self.char_per_minute // 10)
         reducer = self.error_counter * 10
         difficulty = 1 - (
                 (0.4 * self.screen.auto_backspace) +
@@ -72,4 +87,5 @@ class CrustaceaStatistics(widg.Static):
     def count_char_up(self):
         self.char_counter += 1
         self.update(self.updated_statistics())
+        
         

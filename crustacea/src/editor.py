@@ -28,8 +28,9 @@ class EditorScreen(Screen):
     time_paused = Reactive(0.00001)
 
     
-    def __init__(self, input_text: str, language: str, **kwargs):
+    def __init__(self, filename: str, input_text: str, language: str, **kwargs):
         super().__init__(**kwargs)
+        self.filename=filename
         self.input_text = input_text
         self.pause = False
         self.language = language
@@ -78,20 +79,25 @@ class EditorScreen(Screen):
     def action_auto_tab(self):
         '''toggles the usage of TAB at line start after return at end of line'''
         self.auto_tab = not self.auto_tab
+        ic(f"Toggle Automatic TAB into {self.auto_tab}")
 
     def action_auto_return(self):
         '''toggles the usage of automatic RETURN at end of line'''
         self.auto_return = not self.auto_return
+        ic(f"Toggle Automatic RETURN into {self.auto_return}")
         
     def action_auto_backspace(self):
         '''enable the navigation with arrow keys in the code editor'''
         self.auto_backspace = not self.auto_backspace 
+        ic(f"Toggle Automatic BACKSPACE into {self.auto_backspace}")
                     
     def action_pause_timer(self):
         '''paused the elapse timer'''
         self.pause = not self.pause
         self.text_area.disabled = not self.text_area.disabled
+        ic(f"Pause Crustacea App {self.text_area.disabled}")
         
     def action_cursor_navigation(self):
         '''enable the navigation with arrow keys in the code editor'''
         self.enable_arrow_keys = not self.enable_arrow_keys        
+        ic(f"Toggle CURSOR Navigation into {self.enable_arrow_keys}")

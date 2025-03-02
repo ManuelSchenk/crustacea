@@ -9,10 +9,10 @@ from crustacea.src.language_map import language_map
 
 text_folder = Path("./crustacea/texts")
 
-class MenuScreen(Screen):
+class FileMenuScreen(Screen):
     
     DEFAULT_CSS = """
-    MenuScreen {
+    FileMenuScreen {
         align: center middle;
     }
     #radio_set {
@@ -31,7 +31,7 @@ class MenuScreen(Screen):
         py_files = list(text_folder.glob("*.*"))
         # Create a RadioSet with a radio button for each file.
         yield RadioSet(*(RadioButton(label=py_file.name) for py_file in py_files), id="radio_set")
-        yield Button("Start Typing...", id="submit")
+        yield Button("Start Typing...", variant="primary", id="submit")
         yield Footer()
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
@@ -58,6 +58,7 @@ class MenuScreen(Screen):
                 # selected_option = selected_button.id  # or any property you set for your option
                 self.app.push_screen(
                     EditorScreen(
+                        filename=file_name,
                         input_text=input_text, 
                         language=language)
                     )
