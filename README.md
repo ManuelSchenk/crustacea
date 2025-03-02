@@ -21,7 +21,7 @@ This Application is for people who wants to learn or improve there ten fingers t
 You can use your own texts or scripts in your favorite programming language with common syntax highlighting to get faster and more efficient in your everyday working.
 
 <div align="center">
-    <img src="crustacea.jpg" alt="Logo" width="924" height="751">
+    <img src="crustacea.jpg" alt="Logo">
 </div>
 
 #### It provides the following features:
@@ -95,7 +95,7 @@ In the Footer you see all the options which can be toggled with keyboard shortcu
 Your current statistics will be shown above the footer line.
 Your history and progress will be visualized at the end of each lecture:
 <div align="center">
-    <img src="results_vis.jpg" alt="Logo" width="1213" height="620">
+    <img src="results_vis.jpg" alt="Logo">
 </div>
 
 
