@@ -1,12 +1,12 @@
 [tool.poetry]
 name = "crustacea"
-version = "0.1.0"
+version = "1.1.0"
 description = ""
 authors = ["Manuel Schenk <manuel.schenk@bosch.de>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.13"
+python = ">=3.10,<4.0.0"
 textual = {extras = ["syntax"], version = "~2.1.1"}
 icecream = "^2.1.4"
 textual-dev = "^1.7.0"
