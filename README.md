@@ -120,7 +120,7 @@ Your history and progress will be visualized at the end of each lecture:
 
 ### Debugging
 
-You can easily use VSCode debugger on this project with the provided `./.vscode/launch.json`
+You can easily use VSCode debugger on this project with the provided `./.vscode/launch.json`. Just press **F5** when you have the project folder of crustacea open in vscode.
 
 
 <!-- ROADMAP -->
