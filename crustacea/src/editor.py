@@ -2,7 +2,7 @@ from textual.screen import Screen
 from textual.widgets import Footer
 import textual.app as app
 from textual.reactive import Reactive
-
+from textual.binding import Binding
 
 from crustacea.utils.logging import ic 
 from crustacea.src.statistics import CrustaceaStatistics
@@ -11,12 +11,12 @@ import crustacea.src.text_area as edit
 from time import monotonic 
 
 
-
 class EditorScreen(Screen):
-    
-    # TODO add a auto return binding
-    
+    """The main editor screen for the Crustacea app"""
     BINDINGS = [
+        Binding("ctrl+q", "quit", "Quit", 
+                tooltip="Quit the app and return to the command prompt.", 
+                show=True, priority=True),
         ("ctrl+s", "pause_timer", "Pause"),
         ("ctrl+b", "auto_backspace", "Enable Automatic Backspace"),
         ("ctrl+r", "auto_return", "Enable Automatic Return"),

@@ -6,7 +6,6 @@ from textual.widgets import Static
 
 from crustacea.src.results_storage import StorageContext
 from crustacea.src.results_sparkline import StatisticHorizontal
-from crustacea.utils.logging import ic 
 
 
 class ResultVisualization(Screen):
