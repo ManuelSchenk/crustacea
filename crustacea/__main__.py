@@ -8,6 +8,10 @@ class Crustacea(app.App):
         # Start with the menu screen.
         self.push_screen(FileMenuScreen())
 
+
+def main():
+    Crustacea().run(mouse=True)
+    
         
 if __name__ == "__main__":
-    Crustacea().run(mouse=True)
+    main()

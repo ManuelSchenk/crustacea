@@ -5,13 +5,12 @@
             "name": "Debug textual App",
             "type": "python",
             "request": "launch",
-            // "program": "${file}",
-            "program": "./crustacea/main.py",
+            "program": "./crustacea", // "${file}",
             "console": "integratedTerminal",
             "env": {
                 "PYTHONPATH": "${workspaceFolder}",
             },
-            "python": "C:/Users/cse2lr/AppData/Local/pypoetry/Cache/virtualenvs/crustacea-2zZKJme4-py3.13/Scripts/python.exe",
+            // "python": "C:/Users/_____FIX_____/AppData/Local/pypoetry/Cache/virtualenvs/crustacea-2zZKJme4-py3.10/Scripts/python.exe",
             "args": ["run", "textual", "run", "${file}"],
         }
     ]

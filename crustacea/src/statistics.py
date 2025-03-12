@@ -1,7 +1,6 @@
 import os
 import textual.widgets as widg 
 
-from crustacea.utils.logging import ic 
 from crustacea.src.results_storage import StorageContext
 
 

@@ -1,17 +1,34 @@
-[tool.poetry]
+[project]
 name = "crustacea"
-version = "0.1.0"
+version = "1.1.0"
 description = ""
-authors = ["Manuel Schenk <manuel.schenk@bosch.de>"]
+authors = [{ name = "Manuel Schenk" }]
 readme = "README.md"
+dependencies = [
+    "textual[syntax]~=2.1.1",
+    "icecream>=2.1.4",
+    "textual-dev>=1.7.0"
+]
 
-[tool.poetry.dependencies]
-python = "^3.13"
-textual = {extras = ["syntax"], version = "~2.1.1"}
-icecream = "^2.1.4"
-textual-dev = "^1.7.0"
-
+[project.scripts]
+crustacea = "crustacea.__main__:main"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "crustacea"
+version = "1.1.0"
+description = ""
+authors = ["Manuel Schenk"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0.0"
+textual = {extras = ["syntax"], version = "~2.1.1"}
+icecream = "^2.1.4"
+textual-dev = "^1.7.0"
+
+[tool.poetry.scripts]
+crustacea = "crustacea.__main__:main"

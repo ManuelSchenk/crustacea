@@ -7,9 +7,9 @@
   <p align="center">
     A ten fingers typing training TUI-App in python based on TEXTUAL!
     <br />
-    <a href="https://github.com/ManuelSchenk/crispy-crustacea/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    <a href="https://github.com/ManuelSchenk/crustacea/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     &middot;
-    <a href="https://github.com/ManuelSchenk/crispy-crustacea/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/ManuelSchenk/crustacea/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
 <br />
@@ -49,46 +49,48 @@ So I'll be adding more in the near future. You may also suggest changes by forki
 ## Getting Started
 
 
-
 ### Prerequisites
 
-* Install Python 3.13
-* Install Poetry
+* Install Python ">=3.10,<4.0.0" 
+* Install Poetry (only for development)
 
 ### Installation
 
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/ManuelSchenk/crispy-crustacea.git
+   git clone https://github.com/ManuelSchenk/crustacea.git
    ```
 2. Change into the project working directory
    ```sh
-   cd crispy-crustacea
+   cd crustacea
    ```
-3. install environment with poetry
+3. install package into your local python (Alternatively use POETRY, see below)
    ```js
-   poetry install
+   pip install .
    ```
 4. [optional] place your own scripts in `./crustacea/texts` to train on them.
-5. run CRUSTACEA with python
+5. run CRUSTACEA direct in your terminal with
    ```sh
-   poetry run python ./crustacea/main.py
+   crustacea
+   ```
+7. or alternatively with python
+   ```sh
+   python -m crustacea
    ```
 
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-To run CRUSTASEA with the following command:
-   ```sh
-   poetry run python ./crustacea/main.py 
-   ```
+Run CRUSTASEA with the following command in the project folder: `crustacea`
 HINT: If you want to train in your own scripts just copy the file into `./crustacea/texts` before you start the app!
 
 In the Footer you see all the options which can be toggled with keyboard shortcuts:
-* `ctrl+s` - **Pause Timer, if you want to make a break while training on a text**
-* `ctrl+b` - **Disable the default behavior: if your make a typing fault you have to correct it with Backspace**
+* `ctrl+q` - **Quit the app and return to the command prompt.**
+* `ctrl+s` - **Pause Timer, if you want to make a break while training on a text.**
+* `ctrl+b` - **Disable default behavior: if your make a typing fault you have to correct it with Backspace.**
+* `ctrl+r` - **Uses Return automatically at the end of a line.**
 * `ctrl+t` - **If your press Enter at the end of a line you jump to the next not empty line. If want to type the TABS manually you can use this**
 * `ctrl+n` - **Enables the Cursor Navigation, so you can jump to the next part of your text you want to train your skills on**
 
@@ -99,6 +101,29 @@ Your history and progress will be visualized at the end of each lecture:
 </div>
 
 
+## for DEVs
+
+### Use poetry for installation 
+(only this make the textual dev tools available)
+
+1. Clone the repo:
+   ```sh
+   git clone https://github.com/ManuelSchenk/crustacea.git && cd crustacea
+   ```
+2. Install DEV environment with poetry:
+   ```js
+   poetry install
+   ```
+3. Run CRUSTACEA with python:
+   ```sh
+   poetry run python ./crustacea
+   ```
+
+### Debugging
+
+You can easily use VSCode debugger on this project with the provided `./.vscode/launch.json`. Just press **F5** when you have the project folder of crustacea open in vscode.
+
+
 <!-- ROADMAP -->
 ## Roadmap
 
@@ -106,7 +131,7 @@ Your history and progress will be visualized at the end of each lecture:
 - [x] store the results/scores in a sqlite 
 - [x] visualize the score history of your last results per file
 
-See the [open issues](https://github.com/ManuelSchenk/crispy-crustacea/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/ManuelSchenk/crustacea/issues) for a full list of proposed features (and known issues).
 
 
 
@@ -131,7 +156,7 @@ Don't forget to give the project a star! Thanks again!
 
 Manuel Schenk - [linkedin-url](linkedin-url)
 
-Project Link: [https://github.com/ManuelSchenk/crispy-crustacea](https://github.com/ManuelSchenk/crispy-crustacea)
+Project Link: [https://github.com/ManuelSchenk/crustacea](https://github.com/ManuelSchenk/crustacea)
 
 
 
@@ -150,7 +175,7 @@ For more information and resources, please refer to the following documentation:
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[issues-url]: https://github.com/ManuelSchenk/crispy-crustacea/issues
+[issues-url]: https://github.com/ManuelSchenk/crustacea/issues
 [linkedin-url]: https://www.linkedin.com/in/manuel-schenk-48246117a/
 [product-screenshot]: crustasea.png
 
