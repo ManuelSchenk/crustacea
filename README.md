@@ -70,7 +70,11 @@ So I'll be adding more in the near future. You may also suggest changes by forki
    pip install .
    ```
 4. [optional] place your own scripts in `./crustacea/texts` to train on them.
-5. run CRUSTACEA with python
+5. run CRUSTACEA direct in your terminal with
+   ```sh
+   crustacea
+   ```
+7. or alternatively with python
    ```sh
    python -m crustacea
    ```
@@ -79,10 +83,7 @@ So I'll be adding more in the near future. You may also suggest changes by forki
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Run CRUSTASEA with the following command in the project folder:
-   ```sh
-   python -m crustacea
-   ```
+Run CRUSTASEA with the following command in the project folder: `crustacea`
 HINT: If you want to train in your own scripts just copy the file into `./crustacea/texts` before you start the app!
 
 In the Footer you see all the options which can be toggled with keyboard shortcuts:
