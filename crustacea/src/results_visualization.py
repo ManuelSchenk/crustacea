@@ -3,6 +3,8 @@ from textual.app import ComposeResult
 from textual.screen import Screen
 from textual.containers import Horizontal, VerticalScroll
 from textual.widgets import Static
+from textual.binding import Binding
+from textual.widgets import Footer
 
 from crustacea.src.results_storage import StorageContext
 from crustacea.src.results_sparkline import StatisticHorizontal
@@ -42,6 +44,13 @@ class ResultVisualization(Screen):
             width: 20%;
         }
     """
+    
+    BINDINGS = [
+        Binding("ctrl+q", "quit", "Quit", 
+                tooltip="Quit the app and return to the command prompt.", 
+                show=True, priority=True),
+        ("ctrl+o", "back_to_menu", "Back to FileMenu"),
+    ]
 
 
     def compose(self) -> ComposeResult:
@@ -68,6 +77,7 @@ class ResultVisualization(Screen):
                 "Char Counter", "Error Counter", "Error Rate (%)", "Char/min", "Score"
                 ]):
                 yield StatisticHorizontal(result_name, self.get_data_for(result_name))
+        yield Footer()
 
         
     def get_data_for(self, result_name):
@@ -79,5 +89,11 @@ class ResultVisualization(Screen):
             # transform the sqlite data into a plain list
             data = [row[0] for row in sqlite_response]
         return data
+    
+    def action_back_to_menu(self):
+        '''switch back to the file selection menu screen'''
+        self.app._driver._enable_mouse_support()
+        self.app.push_screen(self.app.file_menu)
+
         
             

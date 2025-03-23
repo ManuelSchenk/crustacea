@@ -35,6 +35,7 @@ class CrustaceaTextArea(widg.TextArea):
         if event.is_printable or event.key in self.insert_values:
             event.stop()
             event.prevent_default()
+            self._restart_blink()
             insert = self.insert_values.get(event.key, event.character)
 
             current_row, current_col = self.cursor_location
@@ -162,3 +163,4 @@ class CrustaceaTextArea(widg.TextArea):
     def action_cursor_line_start(self, select: bool = False) -> None:
         if self.screen.enable_arrow_keys:
             super().action_cursor_line_start(select)
+            

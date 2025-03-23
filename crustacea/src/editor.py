@@ -22,6 +22,7 @@ class EditorScreen(Screen):
         ("ctrl+r", "auto_return", "Enable Automatic Return"),
         ("ctrl+t", "auto_tab", "Disable Automatic Tab"),
         ("ctrl+n", "cursor_navigation", "Enable Cursor Navigation"),
+        ("ctrl+o", "back_to_menu", "Back to FileMenu"),
     ]
 
     time_elapsed = Reactive(0.00001)
@@ -101,3 +102,9 @@ class EditorScreen(Screen):
         '''enable the navigation with arrow keys in the code editor'''
         self.enable_arrow_keys = not self.enable_arrow_keys        
         ic(f"Toggle CURSOR Navigation into {self.enable_arrow_keys}")
+        
+    def action_back_to_menu(self):
+        '''switch back to the file selection menu screen'''
+        self.app._driver._enable_mouse_support()
+        self.app.push_screen(self.app.file_menu)
+        ic(f"Switch back to the file selection menu.")
