@@ -1,11 +1,12 @@
 import sqlite3
+from pathlib import Path
 
 class StorageContext:
-    def __init__(self, db_path="./crustacea/db/crust.db"):
+    def __init__(self):
         """
         This Class provide access to the sqlite database where all statistics from the training were stored
         """
-        self.db_path = db_path
+        self.db_path = Path(__file__).parents[1] / "db" / "crust.db"
 
     def __enter__(self):
         # Create a connection to the database

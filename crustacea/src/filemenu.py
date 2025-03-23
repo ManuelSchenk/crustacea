@@ -2,12 +2,13 @@ from textual.app import ComposeResult
 from textual.screen import Screen
 from textual.widgets import Header, Footer, RadioSet, RadioButton, Button
 from pathlib import Path
+from textual.binding import Binding
 
 from crustacea.src.editor import EditorScreen
 from crustacea.src.language_map import language_map
 
 
-text_folder = Path("./crustacea/texts")
+text_folder = Path(__file__).parents[1] / "texts"
 
 class FileMenuScreen(Screen):
     
@@ -24,6 +25,12 @@ class FileMenuScreen(Screen):
         margin-right: 3;
     }
     """
+    
+    BINDINGS = [
+        Binding("ctrl+q", "quit", "Quit", 
+                tooltip="Quit the app and return to the command prompt.", 
+                show=True, priority=True),
+    ]
     
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True)
