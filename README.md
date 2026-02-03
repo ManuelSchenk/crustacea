@@ -119,6 +119,10 @@ Your history and progress will be visualized at the end of each lecture:
    ```sh
    poetry run python ./crustacea
    ```
+4. Alternatively you can run it directly with
+   ```
+   poetry run python .\crustacea\main.py
+   ```
 
 ### Debugging
 
