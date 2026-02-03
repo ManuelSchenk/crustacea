@@ -11,7 +11,7 @@ dependencies = [
 ]
 
 [project.scripts]
-crustacea = "crustacea.__main__:main"
+crustacea = "crustacea.main:main"
 
 [build-system]
 requires = ["poetry-core"]
@@ -31,4 +31,4 @@ icecream = "^2.1.4"
 textual-dev = "^1.7.0"
 
 [tool.poetry.scripts]
-crustacea = "crustacea.__main__:main"
+crustacea = "crustacea.main:main"

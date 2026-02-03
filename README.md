@@ -26,12 +26,13 @@ You can use your own texts or scripts in your favorite programming language with
 
 #### It provides the following features:
 * its a terminal based text editor (TUI).
-* on startup you can choose the text you want to train on. Use one of the example scripts or add your own in the `crustacea/texts` folder before starting the app.
+* on startup you can choose the text you want to train on. Use one of the example scripts or add your own in the `crustacea/texts` folder before installing/starting the app.
+* If you have allready installed the app with pip you can find the text folder in e.g. `C:\Python\Python311\Lib\site-packages\crustacea\texts`
 * It uses the default color theme of "vscode_dark" (others are possible but not implemented yet)
 * It provides syntax highlighting for the most programming languages and file formats with tree-sitter (bash,css,go,html,java,javascript,json,markdown,python,regex,rust,sql,toml,xml,yaml)
 * provides some live statistics about your typing performance (Error Rate, Score, ...)
 * multiple difficulty levels in form of "typing options" are provided like **auto tabbing**, **auto return** and **auto backslash** (as default a backslash is forced after each typing failure), to customize your difficulty level
-* you can enable cursor navigation to jump to the part of your file you want to train with 
+* you can enable cursor navigation to jump to the part of your file you want to train with
 * after a lection is finished it shows you the current results (statistics) in numbers and also "sparklines" of the history of your previous results to visualize your progress.
 
 
@@ -39,9 +40,9 @@ You can use your own texts or scripts in your favorite programming language with
 <div align="center">
     <img src="example.png" alt="Logo" width="915" height="634">
 </div>
- 
-Of course, the app do not provide all features i have planed (see [[roadmap]]) or you are looking for now since your needs may be different. 
-So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. 
+
+Of course, the app do not provide all features i have planed (see [[roadmap]]) or you are looking for now since your needs may be different.
+So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue.
 
 <br />
 
@@ -51,7 +52,7 @@ So I'll be adding more in the near future. You may also suggest changes by forki
 
 ### Prerequisites
 
-* Install Python ">=3.10,<4.0.0" 
+* Install Python ">=3.10,<4.0.0"
 * Install Poetry (only for development)
 
 ### Installation
@@ -103,7 +104,7 @@ Your history and progress will be visualized at the end of each lecture:
 
 ## for DEVs
 
-### Use poetry for installation 
+### Use poetry for installation
 (only this make the textual dev tools available)
 
 1. Clone the repo:
@@ -118,6 +119,10 @@ Your history and progress will be visualized at the end of each lecture:
    ```sh
    poetry run python ./crustacea
    ```
+4. Alternatively you can run it directly with
+   ```
+   poetry run python .\crustacea\main.py
+   ```
 
 ### Debugging
 
@@ -127,8 +132,8 @@ You can easily use VSCode debugger on this project with the provided `./.vscode/
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] provide beginners lections with reduced key set 
-- [x] store the results/scores in a sqlite 
+- [x] provide beginners lections with reduced key set
+- [x] store the results/scores in a sqlite
 - [x] visualize the score history of your last results per file
 
 See the [open issues](https://github.com/ManuelSchenk/crustacea/issues) for a full list of proposed features (and known issues).
@@ -154,7 +159,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- CONTACT -->
 ## Contact
 
-Manuel Schenk - [linkedin-url](linkedin-url)
+Manuel Schenk - [linkedin-url](https://www.linkedin.com/in/manuel-schenk-48246117a/)
 
 Project Link: [https://github.com/ManuelSchenk/crustacea](https://github.com/ManuelSchenk/crustacea)
 

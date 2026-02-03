@@ -13,7 +13,7 @@ class StorageContext:
         self.connection = sqlite3.connect(self.db_path)
         self.cursor = self.connection.cursor()
         return self
-    
+
     def _create_table(self):
         """Create the table if it doesn't already exist. Normally not needed"""
         create_table_sql = """
@@ -38,11 +38,11 @@ class StorageContext:
         else:
             self.cursor.execute(query)
         return self.cursor.fetchall()
-    
+
     def insert_result(self, filename, char_counter, error_counter, error_rate, char_per_min, score):
         """
         Insert a new row into the score_table after a training was finished
-        
+
         Returns:
             int: The row id of the inserted row.
         """
@@ -60,7 +60,7 @@ class StorageContext:
 
 
 
-if __name__ == "__main__":
+if __name__ == "main":
     with StorageContext() as db:
         # this creates the crust.db file if not already existing
         db._create_table()
@@ -68,7 +68,7 @@ if __name__ == "__main__":
         # Insert an example row
         row_id = db.insert_result("initial", 0, 0, 0.0, 0.0, 0)
         print("Inserted row id:", row_id)
-        
+
         # Query by filename
         query = 'SELECT * FROM score_table WHERE filename = "initial"'
         rows = db.query(query)
