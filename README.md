@@ -155,7 +155,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- CONTACT -->
 ## Contact
 
-Manuel Schenk - [linkedin-url](linkedin-url)
+Manuel Schenk - [linkedin-url](https://www.linkedin.com/in/manuel-schenk-48246117a/)
 
 Project Link: [https://github.com/ManuelSchenk/crustacea](https://github.com/ManuelSchenk/crustacea)
 
